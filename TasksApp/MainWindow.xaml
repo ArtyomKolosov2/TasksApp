@@ -1,0 +1,51 @@
+﻿<Window x:Class="TasksApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TasksApp"
+        xmlns:Modules="clr-namespace:TasksApp.Modules"
+        mc:Ignorable="d"
+        x:Name="Window" Title="MainWindow" Height="550" Width="800" MaxHeight="600" MaxWidth="900" SizeChanged="Window_SizeChanged" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="DataGridStyle">
+            <Setter Property="Control.FontSize" Value="20"/>
+            <Setter Property="Control.FontFamily" Value="Arial"/>
+            <Setter Property="Control.FontWeight" Value="Bold"/>
+            <Setter Property="Control.BorderThickness" Value="5"/>
+            <Setter Property="Control.BorderBrush" Value="CornflowerBlue"/>
+        </Style>
+    </Window.Resources>
+    <Grid >
+        <TabControl x:Name="TabControl" Margin="10">
+            <TabItem Header="Таблица Задач">
+                <DataGrid x:Name="MainDataGrid" Style="{StaticResource DataGridStyle}" AutoGenerateColumns="False" CellEditEnding="MainDataGrid_CellEditEnding">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=TaskEditTime}" IsReadOnly="True" Header="Edit Date" Width="auto"/>
+                        <DataGridCheckBoxColumn Binding="{Binding Path=IsDone}" IsReadOnly="False" Header="Is Done" Width="auto"/>
+                        <DataGridTextColumn Binding="{Binding Path=TaskInfo}" IsReadOnly="False" Header="Task" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Календарь">
+                <StackPanel Orientation="Horizontal">
+                    <GroupBox Header="Календарь" Width="490">
+                        <Viewbox Stretch="Fill" StretchDirection="UpOnly">
+                            <Calendar SelectionMode="MultipleRange" Margin="10,10,10,20" x:Name="TaskCalendar" MouseDoubleClick="TaskCalendar_MouseDoubleClick">
+                            </Calendar>
+                        </Viewbox>
+                    </GroupBox>
+                    <GroupBox Header="Tasks" Width="270">
+                        <ListBox>
+                            <StackPanel x:Name="StackPanelTasks" Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=TaskEditTime}"/>
+                                <CheckBox IsEnabled="{Binding Path=IsDone}"/>
+                                <TextBlock Text="{Binding Path=TaskInfo}"/>
+                            </StackPanel>
+                        </ListBox>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
