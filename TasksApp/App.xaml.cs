@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Globalization;
+using System.Threading;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace TasksApp
 {
@@ -13,5 +10,18 @@ namespace TasksApp
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+
+            CultureInfo cultureInfo = new CultureInfo("en-us");
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+            CultureInfo.CurrentCulture = cultureInfo;
+            CultureInfo.CurrentUICulture = cultureInfo;
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            base.OnStartup(e);
+        }
     }
 }

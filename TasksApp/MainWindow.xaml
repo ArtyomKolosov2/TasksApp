@@ -6,20 +6,32 @@
         xmlns:local="clr-namespace:TasksApp"
         xmlns:Modules="clr-namespace:TasksApp.Modules"
         mc:Ignorable="d"
-        x:Name="Window" Title="MainWindow" Height="550" Width="800" MaxHeight="600" MaxWidth="900" SizeChanged="Window_SizeChanged" Loaded="Window_Loaded">
+        x:Name="Window" Title="TaskApp" Height="550" Width="800" MaxHeight="600" MaxWidth="900" Loaded="Window_Loaded">
     <Window.Resources>
         <Style x:Key="DataGridStyle">
             <Setter Property="Control.FontSize" Value="20"/>
-            <Setter Property="Control.FontFamily" Value="Arial"/>
             <Setter Property="Control.FontWeight" Value="Bold"/>
             <Setter Property="Control.BorderThickness" Value="5"/>
             <Setter Property="Control.BorderBrush" Value="CornflowerBlue"/>
         </Style>
+        <Style x:Key="TabControlStyle">
+            <Setter Property="Control.Background">
+                <Setter.Value>
+                    <LinearGradientBrush>
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Color="White" Offset="-0.3" />
+                            <GradientStop Color="LightBlue" Offset="1" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Control.FontFamily" Value="Arial"/>
+        </Style>
     </Window.Resources>
     <Grid >
-        <TabControl x:Name="TabControl" Margin="10">
-            <TabItem Header="Таблица Задач">
-                <DataGrid x:Name="MainDataGrid" Style="{StaticResource DataGridStyle}" AutoGenerateColumns="False" CellEditEnding="MainDataGrid_CellEditEnding">
+        <TabControl Style="{StaticResource TabControlStyle}" x:Name="TabControl" Margin="10">
+            <TabItem Header="Tasks table">
+                <DataGrid x:Name="MainDataGrid" Style="{StaticResource DataGridStyle}" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=TaskEditTime}" IsReadOnly="True" Header="Edit Date" Width="auto"/>
                         <DataGridCheckBoxColumn Binding="{Binding Path=IsDone}" IsReadOnly="False" Header="Is Done" Width="auto"/>
@@ -27,24 +39,10 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Календарь">
-                <StackPanel Orientation="Horizontal">
-                    <GroupBox Header="Календарь" Width="490">
-                        <Viewbox Stretch="Fill" StretchDirection="UpOnly">
-                            <Calendar SelectionMode="MultipleRange" Margin="10,10,10,20" x:Name="TaskCalendar" MouseDoubleClick="TaskCalendar_MouseDoubleClick">
-                            </Calendar>
-                        </Viewbox>
-                    </GroupBox>
-                    <GroupBox Header="Tasks" Width="270">
-                        <ListBox>
-                            <StackPanel x:Name="StackPanelTasks" Orientation="Horizontal">
-                                <TextBlock Text="{Binding Path=TaskEditTime}"/>
-                                <CheckBox IsEnabled="{Binding Path=IsDone}"/>
-                                <TextBlock Text="{Binding Path=TaskInfo}"/>
-                            </StackPanel>
-                        </ListBox>
-                    </GroupBox>
-                </StackPanel>
+            <TabItem Header="Task Calendar">
+                <Viewbox MaxWidth="550" MaxHeight="600" Stretch="Fill" StretchDirection="UpOnly">
+                    <Calendar FirstDayOfWeek="Monday" BorderThickness="2" BorderBrush="CornflowerBlue" SelectionMode="MultipleRange" Margin="10,10,10,20" x:Name="TaskCalendar" Height="166"/>
+                </Viewbox>
             </TabItem>
         </TabControl>
     </Grid>
