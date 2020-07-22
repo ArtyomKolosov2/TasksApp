@@ -28,6 +28,12 @@
             <Setter Property="Control.FontFamily" Value="Arial"/>
         </Style>
     </Window.Resources>
+    <Window.Background>
+        <RadialGradientBrush>
+            <GradientStop Color="Gray" Offset="-1"/>
+            <GradientStop Color="White" Offset="2"/>
+        </RadialGradientBrush>
+    </Window.Background>
     <Grid >
         <TabControl Style="{StaticResource TabControlStyle}" x:Name="TabControl" Margin="10">
             <TabItem Header="Tasks table">
